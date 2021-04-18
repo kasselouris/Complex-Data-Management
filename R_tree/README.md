@@ -5,6 +5,7 @@ The key idea of the data structure is to group nearby objects and represent them
 
 For more info check [R-tree on wikipedia](https://en.wikipedia.org/wiki/R-tree).
 
+----------------------------------------------------------------------
 ## R_tree.py
 Bulk-loads the R-tree using the [Z-order](https://en.wikipedia.org/wiki/Z-order_curve) value of the center of a rectangle for sorting. 
 
