@@ -35,45 +35,24 @@ def next_row(fd):
 
 #calculates the nearest distance between a querys point and a mbrs rectangle 
 def calculate_distance(point, mbr):
-	#to calculate the distance between a point and a rectangle we distinguish 9 CASES as shown below
-	#1          2          3
-	#    +-------------+
-	#    |             |
-	#4   |      0      |   5
-	#    |             |
-	#    +-------------+
-	#6          7          8
-
-	#CASE 0(point inside mbr)
-	if((mbr[0] <= point[0]) and (point[0] <= mbr[1]) and (mbr[2] <= point[1]) and (point[1] <= mbr[3])):
-		return 0	#distance
-	elif((point[0] < mbr[0]) and (point[1] > mbr[3])):	#CASE 1
-		x = mbr[0] - point[0]
-		y = point[1] - mbr[3]
-		return math.sqrt(x**2 + y**2)
-	elif((mbr[0] <= point[0]) and (point[0] <= mbr[1]) and point[1] > mbr[3]):		#CASE 2
-		return point[1] - mbr[3]
-	elif((point[0] > mbr[1]) and (point[1] > mbr[3])):	#CASE 3
-		x = point[0] - mbr[1]
-		y = point[1] - mbr[3]
-		return math.sqrt(x**2 + y**2)
-	elif((point[0] < mbr[0]) and (mbr[2] <= point[1]) and (point[1] <= mbr[3])):	#CASE 4
-		return mbr[0] - point[0]
-	elif((point[0] > mbr[1]) and (mbr[2] <= point[1]) and (point[1] <= mbr[3])):	#CASE 5
-		return point[0] - mbr[1]
-	elif((point[0] < mbr[0]) and (point[1] < mbr[2])):	#CASE 6
-		x = mbr[0] - point[0]
-		y = mbr[2] - point[1]
-		return math.sqrt(x**2 + y**2)
-	elif((mbr[0] <= point[0]) and (point[0] <= mbr[1]) and point[1] < mbr[2]):		#CASE 7
-		return mbr[2] - point[1]
-	elif((point[0] > mbr[1]) and (point[1] < mbr[2])):	#CASE 8
-		x = point[0] - mbr[1]
-		y = mbr[2] - point[1]
-		return math.sqrt(x**2 + y**2)
+	#calculate dx
+	if(point[0] < mbr[0]):
+		dx = mbr[0] - point[0]
+	elif(point[0] > mbr[1]):
+		dx = point[0] - mbr[1]
 	else:
-		print("Error while calculating distance between point and MBR!")
-		sys.exit(1)
+		dx = 0
+
+	#calculate dy
+	if(point[1] < mbr[2]):
+		dy = mbr[2] - point[1]
+	elif(point[1] > mbr[3]):
+		dy = point[1] - mbr[3]
+	else:
+		dy = 0
+
+	#return distance
+	return math.sqrt(dx**2 + dy**2)
 
 
 #Best First Nearest Neighbor Search
