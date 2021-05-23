@@ -15,4 +15,4 @@ Based on the Californias Road Network above we find the shortest path distance b
 
 ## topK_NRA.py
 
-Based on the Californias Road Network above we find the best meeting node for a set of starting nodes. The best meeting node must selected so as the max shortest path distance from a starting node to this node is optimized. Dijkstras shortest path and top K NRA algorithm are used. 
+Based on the Californias Road Network above we find the best meeting node for a set of starting nodes. The best meeting node must selected so as the max shortest path distance from a starting node to this node is the smallest possible. Dijkstras shortest path and top K NRA algorithm are used. 
