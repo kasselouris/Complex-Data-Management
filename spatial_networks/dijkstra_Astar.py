@@ -94,9 +94,11 @@ def dijkstra_Astar_SP(source, target, algorithm):
 	if(algorithm == "D"):	#if Dijkstra
 		#Initialize and insert to priority queue a tuple of type (SPD, node_id)
 		priority_queue = [(SPD[source], source)]
+		priority_dict = {source : SPD[source]}	#initialize priority_dict for faster remove time in priority_queue
 	else:	#if A*
 		#Initialize and insert to priority queue a tuple of type (SPD + L2 distance of source node from target, node_id)
 		priority_queue = [(SPD[source] + nodes_distance(source, target), source)]
+		priority_dict = {source : SPD[source] + nodes_distance(source, target)}	#initialize priority_dict for faster remove time in priority_queue
 	
 	while True:
 		try:
@@ -127,15 +129,16 @@ def dijkstra_Astar_SP(source, target, algorithm):
 						path[neighbor_id].append(node_id)
 						
 						#add or update neighbor_id on priority queue
-						#if neighbor_id already in priority queue delete its old entry
-						for index, node in enumerate(priority_queue):
-							if node[1] == neighbor_id:
-								del priority_queue[index]
-								heapq.heapify(priority_queue)
-								break	#break for-loop
+						try:	#neighbro_id in priority_dict -> UPDATE
+							old_SPD = priority_dict[neighbor_id]
+							priority_queue.remove((old_SPD, neighbor_id))
+							heapq.heapify(priority_queue)
 
-						#add new entry to priority queue for neighbor_id
-						heapq.heappush(priority_queue, (SPD[neighbor_id], neighbor_id))
+							priority_dict[neighbor_id] = SPD[neighbor_id] 
+							heapq.heappush(priority_queue, (SPD[neighbor_id], neighbor_id))
+						except KeyError:	#neighbro_id NOT in priority_dict -> ADD
+							priority_dict[neighbor_id] = SPD[neighbor_id] 
+							heapq.heappush(priority_queue, (SPD[neighbor_id], neighbor_id))
 				else:	#if A*
 					if(SPD[neighbor_id] + nodes_distance(neighbor_id, target) > 
 						SPD[node_id] + nodes_distance(node_id, target) + weight):
@@ -145,17 +148,18 @@ def dijkstra_Astar_SP(source, target, algorithm):
 						path[neighbor_id].clear()	#clear old path
 						path[neighbor_id].extend(path[node_id])
 						path[neighbor_id].append(node_id)
-						
-						#add or update neighbor_id on priority queue
-						#if neighbor_id already in priority queue delete its old entry
-						for index, node in enumerate(priority_queue):
-							if node[1] == neighbor_id:
-								del priority_queue[index]
-								heapq.heapify(priority_queue)
-								break	#break for-loop
 
-						#add new entry to priority queue for neighbor_id
-						heapq.heappush(priority_queue, (SPD[neighbor_id] + nodes_distance(neighbor_id, target), neighbor_id))
+						#add or update neighbor_id on priority queue
+						try:	#neighbro_id in priority_dict -> UPDATE
+							old_SPD = priority_dict[neighbor_id]
+							priority_queue.remove((old_SPD, neighbor_id))
+							heapq.heapify(priority_queue)
+
+							priority_dict[neighbor_id] = SPD[neighbor_id] + nodes_distance(neighbor_id, target)
+							heapq.heappush(priority_queue, (SPD[neighbor_id] + nodes_distance(neighbor_id, target), neighbor_id))
+						except KeyError:	#neighbro_id NOT in priority_dict -> ADD
+							priority_dict[neighbor_id] = SPD[neighbor_id] + nodes_distance(neighbor_id, target)
+							heapq.heappush(priority_queue, (SPD[neighbor_id] + nodes_distance(neighbor_id, target), neighbor_id))
 
 
 #check if source_node_id and target_node_id are VALID nodes
@@ -174,9 +178,10 @@ def print_stats(results, source, target, algorithm):
 		print("Dijkstra algorithm statistics for path from node "+ str(source) +" to node "+ str(target) +":")
 	else:	#A*
 		print("A* algorithm statistics for path from node "+ str(source) +" to node "+ str(target) +":")
-	print("Distance:", results[0])
-	print("Total node visits:", results[1])
-	print("Path:", results[2], "\n")
+	print("Shortest path length =", len(results[2]))
+	print("Shortest path distance =", results[0])
+	print("Shortest path =", results[2])
+	print("Number of visited nodes =", results[1], "\n")
 
 
 def main(args):

@@ -79,6 +79,7 @@ def dijkstra_search(source):
 
 	#Initialize and insert to priority queue a tuple of type (SPD, node_id)
 	priority_queue = [(SPD[source], source)]
+	priority_dict = {source : SPD[source]}	#initialize priority_dict for faster remove time in priority_queue
 	
 	while True:
 		try:
@@ -102,15 +103,16 @@ def dijkstra_search(source):
 					SPD[neighbor_id] = SPD[node_id] + weight
 					
 					#add or update neighbor_id on priority queue
-					#if neighbor_id already in priority queue delete its old entry
-					for index, node in enumerate(priority_queue):
-						if node[1] == neighbor_id:
-							del priority_queue[index]
-							heapq.heapify(priority_queue)
-							break	#break for-loop
+					try:	#neighbro_id in priority_dict -> UPDATE
+						old_SPD = priority_dict[neighbor_id]
+						priority_queue.remove((old_SPD, neighbor_id))
+						heapq.heapify(priority_queue)
 
-					#add new entry to priority queue for neighbor_id
-					heapq.heappush(priority_queue, (SPD[neighbor_id], neighbor_id))
+						priority_dict[neighbor_id] = SPD[neighbor_id] 
+						heapq.heappush(priority_queue, (SPD[neighbor_id], neighbor_id))
+					except KeyError:	#neighbro_id NOT in priority_dict -> ADD
+						priority_dict[neighbor_id] = SPD[neighbor_id] 
+						heapq.heappush(priority_queue, (SPD[neighbor_id], neighbor_id))
 
 
 #returns the best meeting point for source nodes and the max SPD of source nodes from meeting node
@@ -233,8 +235,8 @@ def main(args):
 	nra_stats = NRA(arg_list)
 
 	#print stats
-	print("Best meeting node for source nodes", arg_list, "is node", nra_stats[0])
-	print("Max distance of a source node from meeting node is", nra_stats[1])
+	print("Best meeting node for source nodes", arg_list, "is node:", nra_stats[0])
+	print("Max shortest path distance =", nra_stats[1])
 
 
 if __name__ == '__main__':
