@@ -5,7 +5,7 @@ Creates a data structure that holds for all the nodes from California Road Netwo
 The data about the Californias Road Network and an example *out.txt* are in the [assets folder](https://github.com/kasselouris/Complex-Data-Management/tree/main/spatial_networks/assets) and are based on [this data set](http://www.cs.utah.edu/~lifeifei/SpatialDataset.htm).
 
 The first line of *out.txt* is:
-> 0 -121.904167 41.974556 1 0.002025 6 0.005952 
+```0 -121.904167 41.974556 1 0.002025 6 0.005952``` 
 
 and is meant to be readed like node 0 with latitude -121.904167 and longtitude 41.974556 has node 1 as neighbor with edge distance 0.002025 and node 6 with edge distance 0.005952.
 
