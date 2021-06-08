@@ -18,4 +18,4 @@ Summary of the projects:
 
 ### 4) [dataset_retrieval](https://github.com/kasselouris/Complex-Data-Management/tree/main/dataset_retrieval)
 
-* Containment and relevance retrieval queries between transactions and items.
+* Efficient containment and relevance retrieval queries methods between transactions and items.
