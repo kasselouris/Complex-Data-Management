@@ -13,17 +13,20 @@ Output:
 * Writes the resulted R-tree on Rtree.txt
 * Prints as output the number of nodes of each tree level.
 
-> An example output is [Rtree.txt](https://github.com/kasselouris/Complex-Data-Management/blob/main/R_tree/assets/Rtree.txt). The output is in this form [isnonleaf, node-id, [[id1, MBR1], [id2, MBR2], …, [idn, MBRn]]]
+An example output is [Rtree.txt](https://github.com/kasselouris/Complex-Data-Management/blob/main/R_tree/assets/Rtree.txt).  
+The output is in this form ```[isnonleaf, node-id, [[id1, MBR1], [id2, MBR2], …, [idn, MBRn]]]```
 
 ## range_queries.py
 Finds the rectangles of the R-tree that intersect a querys rectangle(window).
 
-> An example output is "0 (7): 2527,2712,8371,5042,7080,7656,7944". The output is in this form "query_num (num_of_MBRs_that_intersect_query): MBR_id1, MBR_id2, ...
+* An example output is ```0 (7): 2527,2712,8371,5042,7080,7656,7944```.  
+* The output is in this form ```query_num (num_of_MBRs_that_intersect_query): MBR_id1, MBR_id2, ...```
 
 ## kNNqueries.py
 Finds the K Nearest Neighbors(rectangles) from a querys point.
 
-> An example output for K=10 is "0: 9311,7001,803,5361,6764,3905,1642,3260,4669,5762". The output is in this form "query_num: MBR_id1, MBR_id2, ... 
+* An example output for K=10 is ```0: 9311,7001,803,5361,6764,3905,1642,3260,4669,5762```.  
+* The output is in this form ```query_num: MBR_id1, MBR_id2, ... ```
 
 
-You can find example files to test the above algorithms on [assets folder](https://github.com/kasselouris/Complex-Data-Management/tree/main/R_tree/assets).
+> You can find example files to test the above algorithms on [assets folder](https://github.com/kasselouris/Complex-Data-Management/tree/main/R_tree/assets).
